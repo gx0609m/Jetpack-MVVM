@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".lifecycles.LifecyclesMainActivity"></activity>
+        <activity android:name=".viewmodel.ViewModelMainActivity"></activity>
+        <activity android:name=".lifecycles.LifecyclesMainActivity" />
         <activity android:name=".calculation.MainActivity" />
         <activity android:name=".room.RoomMainActivity">
             <intent-filter>
