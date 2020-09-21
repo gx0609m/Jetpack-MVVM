@@ -30,5 +30,6 @@ public interface WordDao {
     void deleteAllWords();
 
     @Query("SELECT * FROM WORD ORDER BY ID DESC") // 查询
-    List<Word> getAllWords();
+//    List<Word> getAllWords();
+    LiveData<List<Word>> getAllWordsLive();
 }

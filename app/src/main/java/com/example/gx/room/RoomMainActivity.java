@@ -2,6 +2,7 @@ package com.example.gx.room;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.room.Room;
 
 import android.os.Bundle;
@@ -21,6 +22,8 @@ public class RoomMainActivity extends AppCompatActivity {
     TextView textView;
     Button buttonInsert, buttonUpdate, buttonDelete, buttonClear;
 
+    LiveData<List<Word>> allWordsLive;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,9 +33,19 @@ public class RoomMainActivity extends AppCompatActivity {
                 .allowMainThreadQueries() // 测试时可以指定在主线程执行CRUD操作，实际使用时具体的CRUD须在线程中执行
                 .build();
         wordDao = wordDatabase.getWordDao();
-
+        allWordsLive = wordDao.getAllWordsLive();
         textView = findViewById(R.id.textView14);
-        updateView();
+        allWordsLive.observe(this, new Observer<List<Word>>() {
+            @Override
+            public void onChanged(List<Word> words) {
+                StringBuilder text = new StringBuilder();
+                for (int i = 0; i < words.size(); i++) {
+                    Word word = words.get(i);
+                    text.append(word.getId()).append(":").append(word.getWord()).append("=").append(word.getChineseMeaning()).append("\n");
+                }
+                textView.setText(text.toString());
+            }
+        });
 
         buttonInsert = findViewById(R.id.insert);
         buttonInsert.setOnClickListener(new View.OnClickListener() {
@@ -41,7 +54,6 @@ public class RoomMainActivity extends AppCompatActivity {
                 Word word = new Word("hello", "你好");
                 Word word2 = new Word("World!", "世界！");
                 wordDao.insertWords(word, word2);
-                updateView();
             }
         });
 
@@ -50,7 +62,6 @@ public class RoomMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 wordDao.deleteAllWords();
-                updateView();
             }
         });
 
@@ -61,7 +72,6 @@ public class RoomMainActivity extends AppCompatActivity {
                 Word word = new Word("", "");
                 word.setId(2);
                 wordDao.deleteWords(word);
-                updateView();
             }
         });
 
@@ -72,18 +82,7 @@ public class RoomMainActivity extends AppCompatActivity {
                 Word word = new Word("hi", "你好啊");
                 word.setId(5);
                 wordDao.updateWords(word);
-                updateView();
             }
         });
-    }
-
-    void updateView() {
-        List<Word> list = wordDao.getAllWords();
-        StringBuilder text = new StringBuilder();
-        for (int i = 0; i < list.size(); i++) {
-            Word word = list.get(i);
-            text.append(word.getId()).append(":").append(word.getWord()).append("=").append(word.getChineseMeaning()).append("\n");
-        }
-        textView.setText(text.toString());
     }
 }
