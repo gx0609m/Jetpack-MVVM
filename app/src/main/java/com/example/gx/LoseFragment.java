@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.SavedStateViewModelFactory;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 
 import com.example.gx.databinding.FragmentLoseBinding;
 
@@ -70,6 +71,12 @@ public class LoseFragment extends Fragment {
         FragmentLoseBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_lose, container, false);
         binding.setData(myViewModel);
         binding.setLifecycleOwner(requireActivity());
+        binding.button13.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_loseFragment_to_titleFragment);
+            }
+        });
         return binding.getRoot();
     }
 }

@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.SavedStateViewModelFactory;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 
 import com.example.gx.databinding.FragmentWinBinding;
 
@@ -70,6 +71,12 @@ public class WinFragment extends Fragment {
         FragmentWinBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_win, container, false);
         binding.setData(myViewModel);
         binding.setLifecycleOwner(requireActivity());
+        binding.button14.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_winFragment_to_titleFragment);
+            }
+        });
         return binding.getRoot();
     }
 }

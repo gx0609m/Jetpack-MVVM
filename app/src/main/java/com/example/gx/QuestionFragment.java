@@ -32,7 +32,7 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
     private String mParam2;
 
     private FragmentQuestionBinding binding;
-    private StringBuilder mAnswer;
+    private StringBuilder mAnswer = new StringBuilder();
 
     public QuestionFragment() {
         // Required empty public constructor
@@ -73,6 +73,7 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
         final MyViewModel myViewModel = ViewModelProviders.of(requireActivity(),
                 new SavedStateViewModelFactory(requireActivity().getApplication(), requireActivity())).get(MyViewModel.class);
         myViewModel.generateNew();
+        myViewModel.getCurrentScore().setValue(0);
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_question, container, false);
         binding.setData(myViewModel);
         binding.setLifecycleOwner(requireActivity());
@@ -93,6 +94,9 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
             @SuppressWarnings("ConstantConditions")
             @Override
             public void onClick(View v) {
+                if (mAnswer.length() == 0) {
+                    mAnswer.append("-1");
+                }
                 if (Integer.valueOf(mAnswer.toString()).intValue() == myViewModel.getAnswer().getValue()) {
                     myViewModel.answerCorrect();
                     mAnswer.setLength(0);
