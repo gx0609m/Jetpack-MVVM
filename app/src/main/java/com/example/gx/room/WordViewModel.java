@@ -9,37 +9,36 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 /**
+ * ViewModel是管理界面的数据，但是数据的获取不应是ViewModel的职责，因此我们创建仓库类 WordRepository
+ *
  * created by gaoxiang on 2020/9/21
  */
 public class WordViewModel extends AndroidViewModel {
 
-    private WordDao wordDao;
-    private LiveData<List<Word>> allWordsLive;
+    private WordRepository wordRepository;
 
     public WordViewModel(@NonNull Application application) {
         super(application);
-        WordDatabase wordDatabase = WordDatabase.getInstance(application);
-        wordDao = wordDatabase.getWordDao();
-        allWordsLive = wordDao.getAllWordsLive(); // 返回liveData的操作系统会自动放到主线程中，不需要再在线程中去执行了
+        wordRepository = new WordRepository(application);
     }
 
     public LiveData<List<Word>> getAllWordsLive(){
-        return allWordsLive;
+        return wordRepository.getAllWordsLive();
     }
 
     public void insertWords(Word... words) {
-        wordDao.insertWords(words); // 数据库插入需要放到线程中，为方便测试创建database时指定了allowMainThreadQueries，则可以放到主线程中执行
+        wordRepository.insertWords(words);
     }
 
     public void updateWords(Word... words) {
-        wordDao.updateWords(words); // 需要放到线程中，为方便测试创建database时指定了allowMainThreadQueries，则可以放到主线程中执行
+        wordRepository.updateWords(words);
     }
 
     public void deleteWords(Word... words) {
-        wordDao.deleteWords(words); // 需要放到线程中，为方便测试创建database时指定了allowMainThreadQueries，则可以放到主线程中执行
+        wordRepository.deleteWords(words);
     }
 
-    public void deleteAllWords(Word... words) {
-        wordDao.deleteWords(words); // 需要放到线程中，为方便测试创建database时指定了allowMainThreadQueries，则可以放到主线程中执行
+    public void deleteAllWords() {
+        wordRepository.deleteAllWords();
     }
 }
