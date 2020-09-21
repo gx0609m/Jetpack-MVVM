@@ -31,5 +31,5 @@ public interface WordDao {
 
     @Query("SELECT * FROM WORD ORDER BY ID DESC") // 查询
 //    List<Word> getAllWords();
-    LiveData<List<Word>> getAllWordsLive();
+    LiveData<List<Word>> getAllWordsLive(); // 返回liveData的操作系统会自动放到主线程中，不需要再在线程中去执行了
 }
