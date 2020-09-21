@@ -6,13 +6,13 @@
     <data>
         <variable
             name="data"
-            type="com.example.gx.MyViewModel" />
+            type="com.example.gx.calculation.MyViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".LoseFragment">
+        tools:context=".calculation.LoseFragment">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline9"

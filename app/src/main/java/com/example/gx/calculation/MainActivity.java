@@ -1,4 +1,4 @@
-package com.example.gx;
+package com.example.gx.calculation;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
+
+import com.example.gx.R;
 
 public class MainActivity extends AppCompatActivity {
 

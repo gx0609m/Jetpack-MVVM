@@ -1,4 +1,4 @@
-package com.example.gx;
+package com.example.gx.calculation;
 
 import android.app.Application;
 import android.content.Context;

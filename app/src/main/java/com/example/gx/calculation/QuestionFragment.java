@@ -1,4 +1,4 @@
-package com.example.gx;
+package com.example.gx.calculation;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.gx.R;
 import com.example.gx.databinding.FragmentQuestionBinding;
 
 
