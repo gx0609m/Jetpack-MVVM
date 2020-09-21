@@ -3,12 +3,13 @@ package com.example.gx.room;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gx.R;
 
@@ -19,27 +20,25 @@ import java.util.List;
  */
 public class RoomMainActivity extends AppCompatActivity {
 
-    TextView textView;
     Button buttonInsert, buttonUpdate, buttonDelete, buttonClear;
-
     WordViewModel wordViewModel;
+    RecyclerView recyclerView;
+    MyAdapter myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_main);
-
+        recyclerView = findViewById(R.id.recyclerView);
+        myAdapter = new MyAdapter();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(myAdapter);
         wordViewModel = ViewModelProviders.of(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(WordViewModel.class);
-        textView = findViewById(R.id.textView14);
         wordViewModel.getAllWordsLive().observe(this, new Observer<List<Word>>() {
             @Override
             public void onChanged(List<Word> words) {
-                StringBuilder text = new StringBuilder();
-                for (int i = 0; i < words.size(); i++) {
-                    Word word = words.get(i);
-                    text.append(word.getId()).append(":").append(word.getWord()).append("=").append(word.getChineseMeaning()).append("\n");
-                }
-                textView.setText(text.toString());
+                myAdapter.setAllWords(words);
+                myAdapter.notifyDataSetChanged();
             }
         });
 
@@ -47,9 +46,11 @@ public class RoomMainActivity extends AppCompatActivity {
         buttonInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Word word = new Word("hello", "你好");
-                Word word2 = new Word("World!", "世界！");
-                wordViewModel.insertWords(word, word2);
+                String[] english = {"hello", "world", "Android", "Google", "studio", "project", "database", "recycler", "view", "String", "value", "Integer"};
+                String[] chinese = {"你好", "世界", "安卓", "谷歌", "工作室", "工程", "数据库", "回收站", "视图", "字符串", "价值", "整形值"};
+                for (int i = 0; i < english.length; i++) {
+                    wordViewModel.insertWords(new Word(english[i], chinese[i]));
+                }
             }
         });
 
