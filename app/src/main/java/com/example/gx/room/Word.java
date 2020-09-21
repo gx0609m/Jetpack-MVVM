@@ -18,9 +18,20 @@ public class Word {
     @ColumnInfo(name = "chinese_meaning")
     private String chineseMeaning;
 
+    @ColumnInfo(name = "bar_data")
+    private boolean bar;
+
     public Word(String word, String chineseMeaning) {
         this.word = word;
         this.chineseMeaning = chineseMeaning;
+    }
+
+    public boolean isBar() {
+        return bar;
+    }
+
+    public void setBar(boolean bar) {
+        this.bar = bar;
     }
 
     public int getId() {
