@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin:'kotlin-android-extensions'
 
 android {
     compileSdkVersion 29
@@ -43,5 +45,12 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
     def paging_version = "2.1.2"
-    implementation "androidx.paging:paging-runtime:$paging_version" // For Kotlin use paging-runtime-ktx
+    implementation "androidx.paging:paging-runtime:$paging_version"
+    implementation "androidx.core:core-ktx:+"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // For Kotlin use paging-runtime-ktx
+}
+repositories {
+    mavenCentral()
 }
